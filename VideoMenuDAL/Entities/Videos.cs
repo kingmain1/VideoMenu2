@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VideoMenuEntity
+namespace VideoMenuDal.Entities
 {
     public class Videos
     {

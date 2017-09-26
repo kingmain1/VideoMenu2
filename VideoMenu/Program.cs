@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
 using VideoMenuBLL;
-using VideoMenuEntity;
+using VideoMenuBLL.BusinessObjects;
+
+
 
 namespace VideoMenu
 {
@@ -14,7 +16,7 @@ namespace VideoMenu
 
         static void Main(string[] args)
         {           
-            var vid1 = new Videos()
+            var vid1 = new VideosBO()
             {
                 Titel = "DeathStork",
                 Director = "Jens Nissen",
@@ -22,7 +24,7 @@ namespace VideoMenu
             };
             bllFacade.VideoService.Create(vid1);
 
-            bllFacade.VideoService.Create(new Videos()
+            bllFacade.VideoService.Create(new VideosBO()
             {
                 Titel = "King Kong",
                 Director = "Huggo Borge",
@@ -69,17 +71,17 @@ namespace VideoMenu
 
         private static void EditVideo()
         {
-            var video = FindVideoById();
-            if (video != null)
+            var vid = FindVideoById();
+            if (vid != null)
             {
                 Console.WriteLine("Titel: ");
-                video.Titel = Console.ReadLine();
+                vid.Titel = Console.ReadLine();
                 Console.WriteLine("Director: ");
-                video.Director = Console.ReadLine();
+                vid.Director = Console.ReadLine();
                 Console.WriteLine("Playtime: ");
-                video.Playtime = Console.ReadLine();
+                vid.Playtime = Console.ReadLine();
 
-                bllFacade.VideoService.Update(video);
+                bllFacade.VideoService.Update(vid);
             }
             else
             {
@@ -87,7 +89,7 @@ namespace VideoMenu
             }
         }
 
-        private static Videos FindVideoById()
+        private static VideosBO FindVideoById()
         {
             Console.WriteLine("Insert Video Id: ");
             int id;
@@ -124,7 +126,7 @@ namespace VideoMenu
 
             Console.WriteLine("Playtime: ");
             var playtime = Console.ReadLine();
-            bllFacade.VideoService.Create(new Videos()
+            bllFacade.VideoService.Create(new VideosBO()
             {
                 Titel = titel,
                 Director = director,

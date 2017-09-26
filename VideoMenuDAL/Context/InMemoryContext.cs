@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Remotion.Linq.Parsing.Structure.IntermediateModel;
-using VideoMenuEntity;
+using VideoMenuDal.Entities;
 
 namespace VideoMenuDAL.Context
 {

@@ -2,48 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VideoMenuBLL.BusinessObjects;
+using VideoMenuBLL.Converters;
+using VideoMenuDal.Entities;
 using VideoMenuDAL;
-using VideoMenuEntity;
+
 
 namespace VideoMenuBLL.Services
 {
     class VideoService : iVideoService
     {
+        VideoConverter conv = new VideoConverter();
         DALFacade facade;
         public VideoService(DALFacade facade)
         {
             this.facade = facade;
         }
 
-    public Videos Create(Videos vid)
+    public VideosBO Create(VideosBO vid)
         {
             using (var uow = facade.UnitOfWork)
             {
-                var newVid = uow.VideoRepostiory.Create(vid);
+                var newVid = uow.VideoRepostiory.Create(conv.Convert(vid));
                 uow.Complete();
-                return newVid;
+                return conv.Convert(newVid);
             }
         }
 
-        public List<Videos> Getall()
+        public List<VideosBO> Getall()
         {
             using (var uow = facade.UnitOfWork)
             {
-                return uow.VideoRepostiory.Getall();
+                return uow.VideoRepostiory.Getall().Select(c => conv.Convert(c)).ToList();
 
             }
         }
 
-        public Videos Get(int Id)
+        public VideosBO Get(int Id)
         {
             using (var uow = facade.UnitOfWork)
             {
-                return uow.VideoRepostiory.Get(Id);
+                return conv.Convert(uow.VideoRepostiory.Get(Id));
 
             }
         }
 
-        public Videos Update(Videos vid)
+        public VideosBO Update(VideosBO vid)
         {
             using (var uow = facade.UnitOfWork)
             {
@@ -57,18 +61,19 @@ namespace VideoMenuBLL.Services
             videosFromDb.Director = vid.Director;
             videosFromDb.Playtime = vid.Playtime;
             uow.Complete();
-            return videosFromDb;
+            return conv.Convert(videosFromDb);
             }
 
         }
 
-        public Videos Delete(int Id)
+
+        public VideosBO Delete(int Id)
         {
             using (var uow = facade.UnitOfWork)
             {
                 var newVid = uow.VideoRepostiory.Delete(Id);
                 uow.Complete();
-                return newVid;
+                return conv.Convert(newVid);
             }
         }
     }
